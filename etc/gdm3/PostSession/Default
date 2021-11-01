@@ -1,0 +1,8 @@
+#!/bin/sh
+
+guestuser='guest'
+if [ $USER = $guestuser ]
+then
+        rm -rf /home/$guestuser
+fi
+exit 0
