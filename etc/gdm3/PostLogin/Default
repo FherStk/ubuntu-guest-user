@@ -1,0 +1,23 @@
+# Guest user
+guestuser='guest'
+
+if [ $USER = $guestuser ]
+then
+        # Home cleaning
+        [ -d /home/$guestuser ] && rm -rf /home/$guestuser
+
+        # Config files
+        mkdir /home/$guestuser
+        cp /etc/skel/.bash_logout /home/$guestuser
+        cp /etc/skel/.bashrc /home/$guestuser
+        cp /etc/skel/.profile /home/$guestuser
+
+        # Main tweaks
+        mkdir /home/$guestuser/.config
+        cp ~gdm/.config/monitors.xml /home/$guestuser/.config/monitors.xml
+        echo 'yes' > /home/$guestuser/.config/gnome-initial-setup-done
+        chown -R $guestuser:$guestuser /home/$guestuser
+
+        # Extra tweaks
+        echo 'gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts false' > /home/$guestuser/.profile
+fi
